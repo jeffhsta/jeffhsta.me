@@ -4,13 +4,22 @@ services:
     image: nginx:1.15
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./index.html:/www/data/index.html:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
     ports:
       - 80:80
       - 443:443
     depends_on:
       - webapp
+      - apiapp
 
   webapp:
     image: nginx:1.15
+    volumes:
+      - ./webapp/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./webapp/index.html:/www/data/index.html:ro
+
+  apiapp:
+    image: nginx:1.15
+    volumes:
+      - ./apiapp/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./apiapp/index.html:/www/data/index.html:ro
